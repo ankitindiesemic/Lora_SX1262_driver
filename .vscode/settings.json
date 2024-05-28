@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "spi.h": "c",
+        "gpio_config.h": "c",
+        "type_traits": "c"
+    }
+}

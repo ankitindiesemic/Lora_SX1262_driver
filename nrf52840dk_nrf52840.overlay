@@ -1,0 +1,66 @@
+// To get started, press Ctrl+Space to bring up the completion menu and view the available nodes.
+
+// You can also use the buttons in the sidebar to perform actions on nodes.
+// Actions currently available include:
+
+// * Enabling / disabling the node
+// * Adding the bus to a bus
+// * Removing the node
+// * Connecting ADC channels
+
+// For more help, browse the DeviceTree documentation at https://docs.zephyrproject.org/latest/guides/dts/index.html
+// You can also visit the nRF DeviceTree extension documentation at https://nrfconnect.github.io/vscode-nrf-connect/devicetree/nrfdevicetree.html
+
+&spi0 {
+    status = "disabled";
+};
+
+&spi1 {
+    status = "disabled";
+};
+
+&spi2 {
+    status = "disabled";
+};
+
+&spi3{
+    status = "okay";
+    compatible = "nordic,nrf-spim";
+    cs-gpios = < &gpio1 12 GPIO_ACTIVE_LOW >;
+    clock-frequency = < DT_FREQ_K(250) >;
+    // clock-frequency = <8000000>;
+    lora_node@0{
+        compatible = "lora-sx127x";
+        reg = < 0 >;
+        spi-max-frequency = < DT_FREQ_K(250) >;
+        // spi-max-frequency = <8000000>;
+    };
+};
+
+/ {
+    gpio {
+        compatible = "gpio-keys";
+        reset_pin: reset_pin{
+            gpios = < &gpio1 10 GPIO_ACTIVE_HIGH >;
+        };
+        busy_pin: busy_pin{
+            gpios = < &gpio1 11 GPIO_ACTIVE_LOW >;
+            label = "lora_Busy_pin";
+        };
+        tx_en: tx_en {
+            gpios = < &gpio1 8 GPIO_ACTIVE_LOW >;
+            label = "lora_tx_en_pin";
+        };
+        rx_en: rx_en {
+            gpios = < &gpio1 7 GPIO_ACTIVE_LOW >;
+            label = "lora_rx_en_pin";
+        }; 
+    };
+
+    aliases {
+        resetpin = &reset_pin;
+        busypin = &busy_pin;
+        tx-en-pin = &tx_en;
+        rx-en-pin = &tx_en;
+    };
+};

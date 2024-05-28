@@ -1,0 +1,6 @@
+description: |
+    Semtech lora device SX127X series
+
+compatible: "lora-sx127x"
+
+include: spi-device.yaml
